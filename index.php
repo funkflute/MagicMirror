@@ -2,7 +2,7 @@
 
 class config {
 	public static $location = 'Brooklyn, NY';
-	
+	public static $cal_url = '';
 }
 
 ?>
