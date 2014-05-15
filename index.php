@@ -45,9 +45,9 @@ class config {
 				left: 0;
 			}
 			.center {
-				left: 33.333%;
-				top: 33.333%;
-				bottom: 33.333%;
+				left: 30%;
+				top: 30%;
+				bottom: 30%;
 				text-align: center;
 			}
 			sup {
@@ -56,28 +56,68 @@ class config {
 			.light {
 				opacity: .5;
 			}
-			td {
-				padding: 2%;
-				white-space: nowrap;
+			table.pad td {
+				padding: 3%;
+			}
+			.today {
+    			padding: .5em;
+			}
+			.border-bottom {
+    			border-bottom: 1px solid;
+			}
+			.event {
+			    white-space: nowrap;
+    			text-overflow: ellipsis;
+			}
+			.small {
+    			font-size: smaller;
+			}
+			.large {
+    			font-size: larger;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="top-left">
-			tl
+		    <h1 class="border-bottom">Mar 15</h1>
+			<table width="100%" class="small">
+				<tbody>
+					<tr>
+						<td class="date" align="right">Today</td>
+						<td class="time">8:30<sup>am</sup></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="event light">Scrum Meeting</td>
+					</tr>
+					<tr>
+						<td class="date" align="right">3/21</td>
+						<td class="time">10:30<sup>pm</sup></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="event light">Party Time</td>
+					</tr>
+					<tr>
+						<td class="date" align="right">4/2</td>
+						<td class="time">11:30<sup>am</sup></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="event light">Dentist</td>
+					</tr>
+				</tbody>
+			</table>
+			
 		</div>
 		<div class="top-right">
 			<h1>10:30<sup>am</sup></h1>
-			<p>Fri March 5th</p>
 		</div>
 		<div class="center">
 		</div>
 		<div class="bottom-right">
-			<h1>Fri <span class="wi-day-cloudy"></span></h1>
-			<div class="temp-today">
-				<span class="temp-hi">65˚</span> <span class="temp-low light">45˚</span>
-			</div>
-			<hr/>
+		    <div class="today border-bottom">
+    			<div class="temp-today large">
+    			    <span class="wi-day-cloudy"></span> <span class="temp-hi">65˚</span> <span class="temp-low light">45˚</span>
+    			</div>
+		    </div>
 			<table width="100%">
 				<tbody>
 					<tr>
