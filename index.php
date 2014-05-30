@@ -1,3 +1,6 @@
+<?php
+    require_once('config.php');
+?>
 <!DOCTYPE html>
 <html lang="en" ng-app="root">
 	<head>
@@ -170,7 +173,7 @@
 		</div>
 		<script type="text/javascript">
 			angular.module('root', [])
-			    .controller('MagicMirror',function($scope,$http,clock) {
+			    .controller('MagicMirror',function($scope,$http,clock,$timeout) {
 			        // set date/time
 			        $scope.time = clock.getTime();
 			        // if we're refreshing
@@ -269,7 +272,7 @@
 			            }
 			        };
 			        // get weather
-			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=brielle,nj')
+			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=<?=config::$location;?>')
 			            .success(function(data) {
 			                // get today's weather
     			            $scope.today = data.list.shift();
@@ -281,6 +284,9 @@
 			            .error(function(data) {
     			            console.log('Error Getting Weather Data');
 			            });
+			    })
+			    .factory('weather',function($scope) {
+    			    
 			    })
                 .factory('clock', function() {
                     return {
