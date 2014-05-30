@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 <?php
     require_once('config.php');
 ?>
-=======
->>>>>>> db496df311f3142b9e9b90afefe56737c8905b34
 <!DOCTYPE html>
 <html lang="en" ng-app="root">
 	<head>
@@ -176,11 +173,7 @@
 		</div>
 		<script type="text/javascript">
 			angular.module('root', [])
-<<<<<<< HEAD
 			    .controller('MagicMirror',function($scope,$http,clock,$timeout) {
-=======
-			    .controller('MagicMirror',function($scope,$http,clock) {
->>>>>>> db496df311f3142b9e9b90afefe56737c8905b34
 			        // set date/time
 			        $scope.time = clock.getTime();
 			        // if we're refreshing
@@ -279,11 +272,7 @@
 			            }
 			        };
 			        // get weather
-<<<<<<< HEAD
 			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=<?=config::$location;?>')
-=======
-			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=brielle,nj')
->>>>>>> db496df311f3142b9e9b90afefe56737c8905b34
 			            .success(function(data) {
 			                // get today's weather
     			            $scope.today = data.list.shift();
@@ -296,12 +285,9 @@
     			            console.log('Error Getting Weather Data');
 			            });
 			    })
-<<<<<<< HEAD
 			    .factory('weather',function($scope) {
     			    
 			    })
-=======
->>>>>>> db496df311f3142b9e9b90afefe56737c8905b34
                 .factory('clock', function() {
                     return {
                         getTime: function() {
