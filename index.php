@@ -6,7 +6,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>Magic Mirror</title> 
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 		<style type="text/css" media="screen">
 			@import url(//cdnjs.cloudflare.com/ajax/libs/weather-icons/0.0.1/css/weather-icons.css);
 			@import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css);
@@ -34,6 +34,10 @@
 			table {
     			width: 100%;
     			border-collapse: collapse;
+			}
+			.truncate {
+    			text-overflow: ellipsis;
+    			white-space: nowrap;
 			}
 			div[class*=-right] {
 				right: 0;
@@ -121,13 +125,14 @@
 		    <div class="larger lightest"><i class="fa fa-refresh fa-spin"></i></div>
 		</div>
 		<div class="larger top-left">
-			<i class="fa fa-clock-o"></i>{{time | date: 'h:m' }}<sup>{{time | date: 'a' }}</sup>
+			<i class="fa fa-clock-o"></i> {{time | date: 'h:mm' }}<sup>{{time | date: 'a' }}</sup>
 		</div>
 		<div class="larger top-right">
             <i class="fa fa-calendar-o"></i> {{time | date: 'MMM d' }}
 		</div>
 		<div class="bottom-right" ng-show="showWeather">
 		    <div class="today padding-bottom margin-bottom border-bottom">
+			    <div class="lightest">{{location}}</div>
     			<div class="temp-today larger">
     			    <i class="{{getWeatherIcon(today.weather[0].description)}}"></i>
     			    <span class="temp-hi">{{today.temp.max | number: 0}}˚</span>
@@ -147,37 +152,33 @@
 			
 		</div>
 		<div class="bottom-left">
-		    <div class="border-bottom padding-bottom margin-bottom"><i class="fa fa-check-square"></i> Calendar</div>
+		    <div class="border-bottom padding-bottom margin-bottom lighter"><i class="fa fa-check-square"></i> Calendar</div>
 			<table class="smaller">
 				<tbody>
-					<tr>
-						<td class="event lighter">Scrum Meeting</td>
+					<tr ng-repeat-start="event in calendarData">
+						<td class="event truncate">{{event.title}}</td>
 					</tr>
-					<tr>
-						<td class="date lightest padding-bottom">Today @ 8:30<sup>am</sup></td>
-					</tr>
-					<tr>
-						<td class="event lighter">Party Time</td>
-					</tr>
-					<tr>
-						<td class="date lightest padding-bottom">3/21 @ 10:30<sup>pm</sup></td>
-					</tr>
-					<tr>
-						<td class="event lighter">Dentist</td>
-					</tr>
-					<tr>
-						<td class="date lightest">4/2 @ 11:30<sup>am</sup></td>
+					<tr ng-repeat-end>
+						<td class="date lighter padding-bottom">{{event.date_start * 1000 | date: 'EEE MMM d @ h:mm a' }}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<script type="text/javascript">
+
 			angular.module('root', [])
-			    .controller('MagicMirror',function($scope,$http,clock,$timeout) {
-			        // set date/time
-			        $scope.time = clock.getTime();
+			    .controller('MagicMirror',function($scope,$http,$interval) {
+                    // set default location
+   			        $scope.location = 'New York, NY';
 			        // if we're refreshing
 			        $scope.refreshing = false;
+
+                    // update time every minute
+                    $interval(function() {
+                        var d = new Date();
+                        $scope.time = d.getTime();
+            		}, 1000);
+
 			        // weather
 			        $scope.showWeather = false;
 			        $scope.getWeatherIcon = function(desc) {
@@ -261,18 +262,24 @@
 
                             //Extreme
                             case 'tornado':
+                                return 'wi-tornado';
+                            break;
                             case 'tropical storm':
                             case 'hurricane':
+                                return 'wi-hurricane';
+                            break;
                             case 'cold':
                             case 'hot':
                             case 'windy':
+                                return 'wi-windy';
+                            break;
                             case 'hail':
-
-    			            break;
+                                return 'wi-hail';
+                            break;
 			            }
 			        };
 			        // get weather
-			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=<?=config::$location;?>')
+			        $http.get('//api.openweathermap.org/data/2.5/forecast/daily?units=imperial&cnt=5&q=' + $scope.location)
 			            .success(function(data) {
 			                // get today's weather
     			            $scope.today = data.list.shift();
@@ -284,19 +291,16 @@
 			            .error(function(data) {
     			            console.log('Error Getting Weather Data');
 			            });
-			    })
-			    .factory('weather',function($scope) {
-    			    
-			    })
-                .factory('clock', function() {
-                    return {
-                        getTime: function() {
-                            var d = new Date();
-                            return d.getTime();
-                        }
-                    }
-                });
 
+			        // get calendar
+			        $http.get('get-calendar.php')
+			            .success(function(data) {
+			                $scope.calendarData = data;
+			            })
+			            .error(function(data, status, headers, config) {
+    			            console.log('Error Getting Calendar Data ' + status);
+			            });
+			    })
 		</script>
 	</body>
 </html>
