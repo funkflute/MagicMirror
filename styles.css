@@ -1,0 +1,118 @@
+@import url(//cdnjs.cloudflare.com/ajax/libs/weather-icons/0.0.1/css/weather-icons.css);
+@import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css);
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+}
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+	background: #000 no-repeat;
+	color: #fff;
+	font-family: 'Futura', sans-serif;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+    overflow: hidden;
+}
+body.horror {
+	background-image: url(http://3.bp.blogspot.com/-5Iauwxr70js/UYw2evCyOkI/AAAAAAAAA2c/U4vX7Z9Ab1M/s1600/SkullEye.jpg);
+	background-size: 50%;
+}
+body > div {
+	position: absolute;
+	padding: 3%;
+	text-align: center;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+.truncate {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+div[class*=-right] {
+	right: 0;
+}
+div[class*=-left] {
+	left: 0;
+}
+div[class*=top-] {
+	top: 0;
+}
+div[class*=bottom-] {
+	bottom: 0;
+}
+div.middle {
+	top: 35%;
+}
+div[class*=-center] {
+	left: 0;
+	right: 0;
+}
+.center {
+	left: 30%;
+	top: 30%;
+	bottom: 30%;
+	text-align: center;
+}
+sup {
+	font-size: .5em;
+}
+table.padding td {
+	padding: .25em;
+}
+.border-bottom {
+	border-bottom: 1px solid;
+}
+.event {
+    white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.lighter {
+	opacity: .65;
+}
+.lightest {
+	opacity: .4;
+}
+.smaller {
+	font-size: .85em;
+}
+.smallest {
+	font-size: .5em;
+}
+.largest {
+	font-size: 3em;
+}
+.larger {
+	font-size: 2em;
+}
+.padding-bottom {
+    padding-bottom: .5em;	
+}
+.margin-bottom {
+    margin-bottom: .5em;	
+}
+.fa {
+    position: relative;
+    top: -1px;
+}
+.ng-show {
+}
+.refresh {
+    -webkit-animation: pulse 1.5s infinite;
+}
+@-webkit-keyframes pulse {
+    0%, 100% {
+        opacity: .35;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+.debug {
+    outline: 1px green solid;
+}
