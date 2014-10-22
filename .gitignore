@@ -1,1 +1,3 @@
-config.php
+/js/config.js
+Vagrantfile
+.vagrant/
