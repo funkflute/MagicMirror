@@ -1,11 +1,13 @@
 var app = angular.module('root', []);
 
 app.controller('MagicMirror',function($scope,$http,$interval,weatherService,calendarService,config) {
-
+	$scope.appReady = false;
     // set default location
     $scope.location = config.location;
     // weather service
     $scope.weatherService = weatherService;
+    
+    $scope.date = new Date();
 
     // if we're refreshing
     $scope.refreshing = false;
@@ -13,8 +15,7 @@ app.controller('MagicMirror',function($scope,$http,$interval,weatherService,cale
 
     // update time every minute
     $interval(function() {
-        var d = new Date();
-        $scope.time = d.getTime();
+        $scope.time = $scope.date.getTime();
 	}, 1000);
 
 	// get the weather
@@ -28,6 +29,9 @@ app.controller('MagicMirror',function($scope,$http,$interval,weatherService,cale
         weatherService.update($scope,$http);
         calendarService.get($scope,$http);
 	}, 60 * 60 * 1000);
-	
-	$scope.appReady = true;
+
+    // reveal app
+    $interval(function() {
+		$scope.appReady = true
+	}, 2000);
 });

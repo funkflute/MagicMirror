@@ -10,7 +10,7 @@
         <script src="js/services/calendar.js"></script>
 		<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
 	</head>
-	<body ng-controller="MagicMirror">
+	<body ng-controller="MagicMirror" class="ng-cloak">
 		<div class="top-center middle refresh" ng-show="refreshing">
 		    <div class="larger lightest"><i class="fa fa-refresh fa-spin"></i></div>
 		    <div class="lightest" ng-bind="refreshMessage"></div>
@@ -43,7 +43,7 @@
 			
 		</div>
 		<div class="module bottom-left">
-		    <div class="border-bottom padding-bottom margin-bottom lighter"><i class="fa fa-check-square"></i> {{calendarData.summary}}</div>
+		    <div class="border-bottom padding-bottom margin-bottom lightest"><i class="fa fa-check-square"></i> {{calendarData.summary}}</div>
 			<table class="smaller">
 				<tbody>
 					<tr ng-repeat-start="event in calendarData.items">
@@ -52,8 +52,12 @@
 					<tr ng-repeat-end>
 						<td class="date lighter padding-bottom">{{event.start.dateTime | date: 'EEE MMM d @ h:mm a'}}</td>
 					</tr>
+					<tr ng-hide="calendarData.items.length">
+						<td class="event smaller"><i class="fa fa-ban"></i> No Upcoming Events</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
+		<div ng-class="{hide: appReady}" class="veil"><span><i class="fa fa-magic fa-lg"></i><br>Magic Mirror</span></div>
 	</body>
 </html>
