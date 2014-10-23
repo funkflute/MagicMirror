@@ -6,7 +6,7 @@ app.controller('MagicMirror',function($scope,$http,$interval,weatherService,cale
     $scope.location = config.location;
     // weather service
     $scope.weatherService = weatherService;
-    
+    // global date
     $scope.date = new Date();
 
     // if we're refreshing
