@@ -1,6 +1,6 @@
 @import url(http://cdnjs.cloudflare.com/ajax/libs/weather-icons/0.0.1/css/weather-icons.css);
 @import url(http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css);
-@import url(http://fonts.googleapis.com/css?family=Exo|Abel|Quicksand);
+@import url(http://fonts.googleapis.com/css?family=Quicksand);
 
 * {
 	margin: 0;
@@ -14,7 +14,7 @@ body {
     height: 100%;
 	background: #000 no-repeat;
 	color: #fff;
-	font-size: 1.3em;
+	font-size: 1.75em;
 	font-family: 'Quicksand', sans-serif;
     overflow: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -29,9 +29,14 @@ body {
 	height: 100%;
 	opacity: 1;
 	background: #000;
-	transition: 3s opacity ease-out;
+	transition: 3s all ease-out;
 	z-index: 100;
 	line-height: .9;
+	-webkit-filter: blur(0);
+}
+.veil.hide {
+	opacity: 0;
+	-webkit-filter: blur(20px);
 }
 .veil span {
 	display: table-cell;
@@ -39,18 +44,9 @@ body {
 	height: 100%;
 	vertical-align: middle;
 	text-align: center;
-	font-size: 3em;
-}
-.veil.hide {
-	opacity: 0;
+	font-size: 2em;
 }
 
-
-body.horror {
-	background-image: url(http://3.bp.blogspot.com/-5Iauwxr70js/UYw2evCyOkI/AAAAAAAAA2c/U4vX7Z9Ab1M/s1600/SkullEye.jpg);
-	background-position: 50% 50%;
-	background-size: 50%;
-}
 .module {
 	position: absolute;
 	padding: 3%;
