@@ -15,6 +15,7 @@ app.controller('MagicMirror',function($scope,$http,$interval,weatherService,cale
 
     // update time every minute
     $interval(function() {
+	    $scope.date = new Date();
         $scope.time = $scope.date.getTime();
 	}, 1000);
 
