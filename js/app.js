@@ -24,7 +24,7 @@ app.controller('MagicMirror',function($scope,$http,$interval,weatherService,cale
     // calendar service
     calendarService.get($scope,$http);
 
-    // update weather every hour
+    // update every hour
     $interval(function() {
         $scope.refreshing = true;
         weatherService.update($scope,$http);

@@ -1,14 +1,10 @@
-@import url(http://cdnjs.cloudflare.com/ajax/libs/weather-icons/0.0.1/css/weather-icons.css);
-@import url(http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css);
-@import url(http://fonts.googleapis.com/css?family=Quicksand);
-
 * {
 	margin: 0;
 	padding: 0;
-	font-size: 1em;
 }
 html {
     height: 100%;
+	font-size: 1em;
 }
 body {
     height: 100%;
@@ -29,13 +25,14 @@ body {
 	height: 100%;
 	opacity: 1;
 	background: #000;
-	transition: 3s all ease-out;
+	-webkit-transition: 3s all ease-out;
 	z-index: 100;
 	line-height: .9;
 	-webkit-filter: blur(0);
 }
 .veil.hide {
 	opacity: 0;
+	visibility: hidden;
 	-webkit-filter: blur(20px);
 }
 .veil span {

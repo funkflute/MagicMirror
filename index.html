@@ -8,23 +8,21 @@
 		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 		<meta http-equiv="pragma" content="no-cache" />
 		<title>Magic Mirror</title> 
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/services/weather.js"></script>
-        <script src="js/services/calendar.js"></script>
 		<link rel="stylesheet" href="styles.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/weather-icons/0.0.1/css/weather-icons.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" type="text/css" media="screen" />
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand" type="text/css" media="screen" />
 	</head>
 	<body ng-controller="MagicMirror" class="ng-cloak">
-		<div class="top-center middle refresh" ng-show="refreshing">
-		    <div class="larger lightest"><i class="fa fa-refresh fa-spin"></i></div>
+		<div class="module top-center middle refresh" ng-show="refreshing">
+		    <div class="larger lightest"><i class="ion-ios7-reloading"></i></div>
 		    <div class="lightest" ng-bind="refreshMessage"></div>
 		</div>
 		<div class="module larger top-left">
-			<i class="fa fa-clock-o"></i> {{time | date: 'h:mm' }}<sup>{{time | date: 'a' }}</sup>
+			<i class="ion-ios7-clock-outline"></i> {{time | date: 'h:mm' }}<sup>{{time | date: 'a' }}</sup>
 		</div>
 		<div class="module larger top-right">
-            <i class="fa fa-calendar-o"></i> {{time | date: 'MMM d' }}
+            <i class="ion-ios7-calendar-outline"></i> {{time | date: 'MMM d' }}
 		</div>
 		<div class="module bottom-right">
 		    <div class="today padding-bottom margin-bottom border-bottom">
@@ -48,21 +46,34 @@
 			
 		</div>
 		<div class="module bottom-left">
-		    <div class="border-bottom padding-bottom margin-bottom lightest"><i class="fa fa-check-square"></i> {{calendarData.summary}}</div>
+		    <div class="border-bottom padding-bottom margin-bottom lightest"><i class="ion-ios7-bell-outline"></i> {{calendarData.summary}}</div>
 			<table class="smaller">
 				<tbody>
 					<tr ng-repeat-start="event in calendarData.items">
 						<td class="event truncate">{{event.summary}}</td>
 					</tr>
 					<tr ng-repeat-end>
-						<td class="date lighter padding-bottom">{{event.start.dateTime | date: 'EEE MMM d @ h:mm a'}}</td>
+						<td class="date lighter padding-bottom smaller">
+								<span ng-if="event.start.dateTime">
+									{{ event.start.dateTime | date: 'EEE MMM d @ h:mm a' }}
+								</span>
+								<span ng-if="event.start.date">
+									{{ event.start.date | date: 'EEE MMM d' }}
+								</span>
+						</td>
 					</tr>
 					<tr ng-hide="calendarData.items.length">
-						<td class="event smaller"><i class="fa fa-ban"></i> No Upcoming Events</td>
+						<td class="event smaller"><i class="ion-ios7-close-outline"></i> No Upcoming Events</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div ng-class="{hide: appReady}" class="veil"><span><i class="fa fa-magic fa-lg"></i><br>Magic Mirror</span></div>
+
+		<div ng-class="{hide: appReady}" class="veil"><span><i class="ion-wand"></i><br>Magic Mirror</span></div>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/services/weather.js"></script>
+        <script src="js/services/calendar.js"></script>
 	</body>
 </html>
