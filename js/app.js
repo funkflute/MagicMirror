@@ -1,6 +1,7 @@
 var app = angular.module('root', []);
 
-app.controller('MagicMirror',function($scope,$http,$interval,config,weatherService,calendarService) {
+app.controller('MagicMirror',function($scope,$http,$interval,config,weatherService,calendarService,motionService) {
+
 	$scope.appReady = false;
     // set default location
     $scope.location = config.location;
@@ -23,6 +24,11 @@ app.controller('MagicMirror',function($scope,$http,$interval,config,weatherServi
     weatherService.update($scope,$http);
     // calendar service
     calendarService.get($scope,$http);
+
+	// check for motion
+    $interval(function() {
+        motionService.update($scope,$http);
+	}, 4000);
 
     // update every hour
     $interval(function() {
