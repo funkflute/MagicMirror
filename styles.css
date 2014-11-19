@@ -10,7 +10,7 @@ body {
     height: 100%;
 	background: #000 no-repeat;
 	color: #fff;
-	font-size: 1.75em;
+	font-size: 1.85em;
 	font-family: 'Quicksand', sans-serif;
     overflow: hidden;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -97,10 +97,10 @@ table.padding td {
 	text-overflow: ellipsis;
 }
 .lighter {
-	opacity: .55;
+	opacity: .65;
 }
 .lightest {
-	opacity: .4;
+	opacity: .5;
 }
 .smaller {
 	font-size: .85em;

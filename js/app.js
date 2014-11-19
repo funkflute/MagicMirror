@@ -1,6 +1,6 @@
 var app = angular.module('root', []);
 
-app.controller('MagicMirror',function($scope,$http,$interval,weatherService,calendarService,config) {
+app.controller('MagicMirror',function($scope,$http,$interval,config,weatherService,calendarService) {
 	$scope.appReady = false;
     // set default location
     $scope.location = config.location;
