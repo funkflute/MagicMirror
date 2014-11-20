@@ -9,7 +9,7 @@ import time
 import os
 
 # set your sensor pin here
-sensorPin = 26
+sensorPin = 7
 # minutes of non-motion until we disable HDMI
 minUntilDisable = 20
 
