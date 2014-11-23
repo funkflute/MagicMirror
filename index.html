@@ -13,68 +13,70 @@
 		<link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" type="text/css" media="screen" />
 		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Quicksand" type="text/css" media="screen" />
 	</head>
-	<body ng-controller="MagicMirror" class="ng-cloak">
+	<body ng-controller="MagicMirror">
 		<div class="module top-center middle refresh" ng-show="refreshing">
 		    <div class="larger lightest"><i class="ion-ios7-reloading"></i></div>
 		    <div class="lightest" ng-bind="refreshMessage"></div>
 		</div>
-		<div class="module larger top-left">
-			<i class="ion-ios7-clock-outline"></i> {{time | date: 'h:mm' }}<sup>{{time | date: 'a' }}</sup>
-		</div>
-		<div class="module larger top-right">
-            <i class="ion-ios7-calendar-outline"></i> {{time | date: 'MMM d' }}
-		</div>
-		<div class="module bottom-right">
-		    <div class="today padding-bottom margin-bottom border-bottom">
-			    <div class="lightest">{{location}}</div>
-    			<div class="temp-today larger">
-    			    <i class="{{weatherService.getIcon(today.weather[0].description)}}"></i>
-    			    <span class="temp-hi">{{today.temp.max | number: 0}}˚</span>
-    			    <span class="temp-low lighter smaller">{{today.temp.min | number: 0}}˚</span>
-    			</div>
-		    </div>
-			<table class="padding">
-				<tbody ng-repeat="day in forecast">
-					<tr>
-						<td align="right">{{ day.dt * 1000 | date: 'EEE'}}</td>
-						<td><i class="{{weatherService.getIcon(day.weather[0].description)}}"></i></td>
-						<td class="temp-hi">{{day.temp.max | number: 0}}˚</td>
-						<td class="temp-low lighter">{{day.temp.min | number: 0}}˚</td>
-					</tr>
-				</tbody>
-			</table>
-			
-		</div>
-		<div class="module bottom-left">
-		    <div class="border-bottom padding-bottom margin-bottom lightest"><i class="ion-ios7-bell-outline"></i> {{calendarData.summary}}</div>
-			<table class="smaller">
-				<tbody>
-					<tr ng-repeat-start="event in calendarData.items">
-						<td class="event truncate">{{event.summary}}</td>
-					</tr>
-					<tr ng-repeat-end>
-						<td class="date lighter padding-bottom smaller">
-								<span ng-if="event.start.dateTime">
-									{{ event.start.dateTime | date: 'EEE MMM d @ h:mm a' }}
-								</span>
-								<span ng-if="event.start.date">
-									{{ event.start.date | date: 'EEE MMM d' }}
-								</span>
-						</td>
-					</tr>
-					<tr ng-hide="calendarData.items.length">
-						<td class="event smaller"><i class="ion-ios7-close-outline"></i> No Upcoming Events</td>
-					</tr>
-				</tbody>
-			</table>
+		<div ng-class="{show:show_app}" class="wrapper ng-cloak">
+			<div class="module larger top-left">
+				<i class="ion-ios7-clock-outline"></i> {{time | date: 'h:mm' }}<sup>{{time | date: 'a' }}</sup>
+			</div>
+			<div class="module larger top-right">
+	            <i class="ion-ios7-calendar-outline"></i> {{time | date: 'MMM d' }}
+			</div>
+			<div class="module bottom-right">
+			    <div class="today padding-bottom margin-bottom border-bottom">
+				    <div class="lightest" ng-bind="options.location"></div>
+	    			<div class="temp-today larger">
+	    			    <i class="{{weatherService.getIcon(today.weather[0].description)}}"></i>
+	    			    <span class="temp-hi">{{today.temp.max | number: 0}}˚</span>
+	    			    <span class="temp-low lighter smaller">{{today.temp.min | number: 0}}˚</span>
+	    			</div>
+			    </div>
+				<table class="padding">
+					<tbody ng-repeat="day in forecast">
+						<tr>
+							<td align="right">{{ day.dt * 1000 | date: 'EEE'}}</td>
+							<td><i class="{{weatherService.getIcon(day.weather[0].description)}}"></i></td>
+							<td class="temp-hi">{{day.temp.max | number: 0}}˚</td>
+							<td class="temp-low lighter">{{day.temp.min | number: 0}}˚</td>
+						</tr>
+					</tbody>
+				</table>
+				
+			</div>
+			<div class="module bottom-left">
+			    <div class="border-bottom padding-bottom margin-bottom lightest"><i class="ion-ios7-bell-outline"></i> {{calendarData.summary}}</div>
+				<table class="smaller">
+					<tbody>
+						<tr ng-repeat-start="event in calendarData.items">
+							<td class="event truncate">{{event.summary}}</td>
+						</tr>
+						<tr ng-repeat-end>
+							<td class="date lighter padding-bottom smaller">
+									<span ng-if="event.start.dateTime">
+										{{ event.start.dateTime | date: 'EEE MMM d @ h:mm a' }}
+									</span>
+									<span ng-if="event.start.date">
+										{{ event.start.date | date: 'EEE MMM d' }}
+									</span>
+							</td>
+						</tr>
+						<tr ng-hide="calendarData.items.length">
+							<td class="event smaller"><i class="ion-ios7-close-outline"></i> No Upcoming Events</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
-		<div ng-class="{hide: appReady}" class="veil"><span><i class="ion-wand"></i><br>Magic Mirror</span></div>
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
         <script src="js/app.js"></script>
-        <script src="js/config.js"></script>
+        <script src="js/services/config.js"></script>
         <script src="js/services/weather.js"></script>
         <script src="js/services/calendar.js"></script>
-        <script src="js/services/motion.js"></script>
+        <script src="js/services/display.js"></script>
+
 	</body>
 </html>

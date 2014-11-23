@@ -1,44 +1,49 @@
 var app = angular.module('root', []);
 
-app.controller('MagicMirror',function($scope,$http,$interval,config,weatherService,calendarService,motionService) {
+app.controller('MagicMirror',function($scope,$http,$interval,configService,weatherService,calendarService,displayService) {
 
-	$scope.appReady = false;
-    // set default location
-    $scope.location = config.location;
-    // weather service
-    $scope.weatherService = weatherService;
-    // global date
-    $scope.date = new Date();
+    // refreshing
+    $scope.refreshing = true;
+    $scope.refreshMessage = 'Loading';
 
-    // if we're refreshing
-    $scope.refreshing = false;
-    $scope.refreshMessage = 'Refreshing';
+	// get config file
+	configService.load($scope,$http);
 
-    // update time every minute
-    $interval(function() {
+	// init after we get config
+	$scope.start = function(options) {
+
+		// set options
+		$scope.options = options;
+	    // global date
 	    $scope.date = new Date();
-        $scope.time = $scope.date.getTime();
-	}, 1000);
+	    // update time every minute
+	    $interval(function() {
+		    $scope.date = new Date();
+	        $scope.time = $scope.date.getTime();
+		}, 1000);
 
-	// get the weather
-    weatherService.update($scope,$http);
-    // calendar service
-    calendarService.get($scope,$http);
+	    // weather service
+		$scope.weatherService = weatherService;
 
-	// check for motion
-    $interval(function() {
-        motionService.update($scope,$http);
-	}, 4000);
+		// get the weather
+	    weatherService.update($scope,$http);
+	    // calendar service
+	    calendarService.get($scope,$http);
 
-    // update every hour
-    $interval(function() {
-        $scope.refreshing = true;
-        weatherService.update($scope,$http);
-        calendarService.get($scope,$http);
-	}, 60 * 60 * 1000);
+	    // update services every hour
+	    $interval(function() {
+	        $scope.refreshing = true;
+	        weatherService.update($scope,$http);
+	        calendarService.get($scope,$http);
+		}, 60 * 60 * 1000);
 
-    // reveal app
-    $interval(function() {
-		$scope.appReady = true
-	}, 2000);
+		// check for motion
+	    $interval(function() {
+	        displayService.update($scope,$http);
+		}, 4000);
+
+		// show our app
+		$scope.show_app = true;
+	}
+
 });

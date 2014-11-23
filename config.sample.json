@@ -1,0 +1,8 @@
+{
+	"pir_pin": 7,
+	"display_sleep": 20,
+	"service_refresh": 60,
+	"location": "New York, NY",
+	"google_calendar_id": "id@group.calendar.google.com",
+	"google_api_key": ""
+}
