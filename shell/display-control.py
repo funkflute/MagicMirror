@@ -1,22 +1,39 @@
 #!/usr/bin/python
 '''
 This script will use a PIR motion detector to check for lack of motion after
-20 min and shut off the HDMI. it will re-enable the display when motion is
+X min and shut off the HDMI. It will re-enable the display when motion is
 detected.
 '''
 import RPi.GPIO as GPIO
 import time
 import os
 import json
+from os import path
 
+# allow to easily create JSON string
 class Object:
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
-# read in config file
-options = json.load(open('../config.json'))
+# get root path
+root_path = os.path.dirname(os.path.dirname(__file__)) + '/'
 
-# set your sensor pin here
+# files to read/write
+options_file = root_path + 'config.json'
+display_file = root_path + 'display.json'
+
+def writeJSON(data):
+  # set to write to display file, right now
+  file = open(display_file, mode='w')
+  data.timestamp = time.time()
+  file.write(display.toJSON())
+  file.close()
+  return
+
+# read in config file
+options = json.load(open(options_file))
+
+# set sensor pin
 sensorPin = options['pir_pin']
 # minutes of non-motion until we disable HDMI
 minUntilDisable = options['display_sleep']
@@ -24,19 +41,15 @@ minUntilDisable = options['display_sleep']
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(sensorPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-data = Object()
-data.active = True
-data.timestamp = None
+display = displayDefault = Object()
+display.active = True
+writeJSON(display)
 
-# other variables
+# variables
 CurrentState = 0
 PreviousState = 0
 startTime = 0
-stopTime = 0
-
-# set file to store
-file = open('../display.json', mode='w')
-file.write(data.toJSON())
+stopTime = time.time()
 
 try:
 
@@ -63,13 +76,12 @@ try:
       # time of motion
       startTime = time.time()
       # if HDMI is off and motion is detected, turn it back on
-      if data.active == False:
+      if display.active == False:
         # turn on display
         os.system("tvservice -p")
-        # save/write data
-        data.active = True
-        data.timestamp = startTime
-        file.write(data.toJSON())
+        # set/write data
+        display.active = True
+        writeJSON(display)
 
     elif CurrentState==0 and PreviousState==1:
       # PIR has returned to ready state
@@ -78,21 +90,19 @@ try:
       elapsedTime = int(stopTime-startTime)
       print "-> Sensor was reset after: " + str(elapsedTime) + " secs"
 
-    disableTime = int(time.time() - stopTime)
     # if time since end of motion is greater than X, and HDMI is on, turn it off
-    if stopTime > 0 and disableTime > minUntilDisable * 60 and data.active == True:
+    if stopTime > 0 and int(time.time() - stopTime) > minUntilDisable * 60 and display.active == True:
       # turn off HDMI
       os.system("tvservice -o")
       # set/write data
-      data.active = False
-      data.timestamp = disableTime
-      file.write(data.toJSON())
+      display.active = False
+      writeJSON(display)
 
-except KeyboardInterrupt:
+except:
   print "Quitting"
   # Reset GPIO settings
   GPIO.cleanup()
-
-# make sure video is displayed on exit
-if data.active == False:
-  os.system("tvservice -p")
+  # make sure video is displayed on exit
+  if display.active == False:
+    os.system("tvservice -p")
+    writeJSON(displayDefault)
