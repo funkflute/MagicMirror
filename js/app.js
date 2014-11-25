@@ -35,7 +35,7 @@ app.controller('MagicMirror',function($scope,$http,$interval,configService,weath
 	        $scope.refreshing = true;
 	        weatherService.update($scope,$http);
 	        calendarService.get($scope,$http);
-		}, 60 * 60 * 1000);
+		}, options.service_refresh * 60 * 1000);
 
 		// check for motion
 	    $interval(function() {

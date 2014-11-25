@@ -81,6 +81,7 @@ try:
         os.system("tvservice -p")
         # set/write data
         display.active = True
+        stopTime = 0
         writeJSON(display)
 
     elif CurrentState==0 and PreviousState==1:
