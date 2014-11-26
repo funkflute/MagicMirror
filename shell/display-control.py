@@ -99,6 +99,9 @@ try:
       display.active = False
       writeJSON(display)
 
+    # sleep for a bit to reduce cpu usage
+    time.sleep(1)
+
 except:
   print "Quitting"
   # Reset GPIO settings
