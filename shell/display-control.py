@@ -16,7 +16,7 @@ class Object:
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 # get root path
-root_path = os.path.dirname(os.path.dirname(__file__)) + '/'
+root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/'
 
 # files to read/write
 options_file = root_path + 'config.json'
