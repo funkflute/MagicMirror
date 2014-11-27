@@ -18,7 +18,7 @@ body {
 
 .wrapper {
 	-webkit-transition: opacity 2s ease-out;
-	-webkit-transition-delay: 2s;
+	-webkit-transition-delay: 1s;
 	opacity: 0;
 }
 
